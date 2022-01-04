@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'models/repo.dart';
+import 'data/models/repo.dart';
 
 void main() async {
   await Hive.initFlutter();
