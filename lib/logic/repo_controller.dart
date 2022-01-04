@@ -12,13 +12,14 @@ class RepoController {
   /// it fetches repos & add repo object to hive box
   Future<void> fetchRepos() async {
     // GET LAST FETCHED PAGE COUNT & GET ALL REPOS
-    int lastPageCount = utilsBox.get(lastFetchedPageName, defaultValue: -1);
-    List<Repo> repos = await repoRepository.getRepos(lastPageCount + 1);
+    int pageCount = utilsBox.get(lastFetchedPageName, defaultValue: 0);
+    List<Repo> repos = await repoRepository.getRepos(pageCount);
 
     // STORE LAST FETCHED PAGE COUNT
-    await utilsBox.put(lastFetchedPageName, lastPageCount);
+    await utilsBox.put(lastFetchedPageName, pageCount + 1);
 
     // ADD ALL REPOS TO REPO BOX
     await repoBox.addAll(repos);
+    return;
   }
 }

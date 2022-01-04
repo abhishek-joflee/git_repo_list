@@ -6,7 +6,7 @@ class RepoRepository {
 
   Future<List<Repo>> getRepos(int pageCount) async {
     List<Repo> result = [];
-    List<Map<String, dynamic>> rawRepos = await repoAPI.getRawRepos(pageCount);
+    List<dynamic> rawRepos = await repoAPI.getRawRepos(pageCount);
 
     // CONVERT RAW JSON INTO REPO OBJECT
     for (var rawRepo in rawRepos) {
