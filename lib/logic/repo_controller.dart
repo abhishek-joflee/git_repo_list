@@ -17,7 +17,7 @@ class RepoController {
       return;
     }
     // GET LAST FETCHED PAGE COUNT & GET ALL REPOS
-    int pageCount = utilsBox.get(lastFetchedPageName, defaultValue: 0);
+    int pageCount = utilsBox.get(lastFetchedPageName, defaultValue: 1);
     List<Repo> repos = await repoRepository.getRepos(pageCount);
 
     if (repos.length < 15) {

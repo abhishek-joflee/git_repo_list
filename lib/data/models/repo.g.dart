@@ -19,7 +19,7 @@ class RepoAdapter extends TypeAdapter<Repo> {
     return Repo(
       id: fields[0] as int,
       name: fields[1] as String,
-      description: fields[2] as String,
+      description: fields[2] as String?,
       language: fields[3] as String?,
       openIssuesCount: fields[4] as int,
       starCount: fields[5] as int,
@@ -62,7 +62,7 @@ class RepoAdapter extends TypeAdapter<Repo> {
 Repo _$RepoFromJson(Map<String, dynamic> json) => Repo(
       id: json['id'] as int,
       name: json['name'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
       language: json['language'] as String?,
       openIssuesCount: json['open_issues_count'] as int,
       starCount: json['stargazers_count'] as int,

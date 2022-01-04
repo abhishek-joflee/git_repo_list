@@ -25,7 +25,7 @@ class Repo extends HiveObject {
 
   @HiveField(2)
   @JsonKey(name: 'description')
-  String description;
+  String? description;
 
   @HiveField(3)
   @JsonKey(name: 'language')
