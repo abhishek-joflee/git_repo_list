@@ -3,11 +3,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'data/models/repo.dart';
 import 'logic/repo_controller.dart';
+import 'utils/my_hive_constants.dart';
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<Repo>(RepoAdapter());
-  await Hive.openBox<Repo>('repo');
+  await Hive.openBox<Repo>(repoBoxName);
+  await Hive.openBox(utilsBoxName);
   runApp(const MyApp());
 }
 
@@ -30,7 +32,7 @@ class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   final RepoController repoController = RepoController();
-  final Box<Repo> repoBox = Hive.box('repo');
+  final Box<Repo> repoBox = Hive.box(repoBoxName);
 
   @override
   Widget build(BuildContext context) {
