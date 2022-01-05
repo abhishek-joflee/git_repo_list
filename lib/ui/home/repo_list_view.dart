@@ -6,37 +6,37 @@ import '../../logic/repo_controller.dart';
 import '../../utils/my_hive_constants.dart';
 import '../widgets/icon_text_chip.dart';
 
+// ignore: must_be_immutable
 class RepoListView extends StatelessWidget {
   RepoListView({Key? key}) : super(key: key);
 
   final RepoController repoController = RepoController();
   final Box<Repo> repoBox = Hive.box(repoBoxName);
-  bool isFetching = false;
-
-  Future<void> _fetchRepos() async {
-    // return if already fetching
-    if (isFetching) return;
-
-    isFetching = true;
-    await repoController.fetchRepos();
-    isFetching = false;
-  }
+  // FUTURE HOLDING VARIABLE (to show loader)
+  Future<void>? _fetchRepos;
 
   @override
   Widget build(BuildContext context) {
     // CALLING FETCH REPOS ON FIRST APP LAUNCH
     if (repoBox.length == 0) {
-      Future.delayed(Duration.zero, _fetchRepos);
+      Future.delayed(
+        Duration.zero,
+        () => _fetchRepos = repoController.fetchRepos(),
+      );
     }
 
     // HIVE WILL REBUILD THIS, IF DATA ADDED
     return ValueListenableBuilder(
       valueListenable: repoBox.listenable(),
       builder: (ctx, box, _) {
-        // NOTIFICATION LISTENER (for pagination)
         return ListView.separated(
           itemCount: repoBox.length + 1,
           itemBuilder: (context, index) {
+            // CALLING FETCH REPOS WHEN LAST 3RD ITEM IS RENDERED
+            if (index == repoBox.length - 3) {
+              _fetchRepos = repoController.fetchRepos();
+            }
+
             if (index != repoBox.length) {
               // REPO OBJECT
               Repo? repo = repoBox.getAt(index);
@@ -109,7 +109,7 @@ class RepoListView extends StatelessWidget {
             } else {
               // SHOW LOADER IF FETCHING IN PROGRESS
               return FutureBuilder(
-                future: _fetchRepos(),
+                future: _fetchRepos,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   switch (snapshot.connectionState) {
 
