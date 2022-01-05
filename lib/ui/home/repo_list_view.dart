@@ -28,7 +28,6 @@ class RepoListView extends StatelessWidget {
         return ListView.separated(
           itemCount: repoBox.length + 1,
           itemBuilder: (context, index) {
-            print("$index build");
             // CALLING FETCH REPOS WHEN LAST 3RD ITEM IS RENDERED
             if (index == repoBox.length - 3) {
               _fetchRepos = RepoController.instance.fetchRepos();
