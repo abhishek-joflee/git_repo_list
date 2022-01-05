@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../data/models/repo.dart';
+import '../../logic/repo_controller.dart';
 import '../../utils/my_hive_constants.dart';
 import 'repo_list_view.dart';
 
@@ -21,6 +22,8 @@ class _MyHomePageState extends State<MyHomePage> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  final RepoController repoController = RepoController();
 
   @override
   void initState() {
@@ -55,6 +58,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     _connectionStatus = result;
     if (_connectionStatus == ConnectivityResult.none) {
+      // USER IS OFFLINE
+      repoController.isOffline = true;
+
+      // SHOW NO INTERNET SNACKBAR
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
