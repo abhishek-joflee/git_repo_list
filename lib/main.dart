@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:git_repo_list/controller/auth_controller.dart';
 
+import 'controller/auth_controller.dart';
 import 'ui/home/home_page.dart';
-import 'ui/splash/splash.dart';
+import 'ui/splash/biometric_login_page.dart';
 import 'utils/my_flutter_init.dart';
 
 void main() async {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             case ConnectionState.none:
             case ConnectionState.waiting:
             case ConnectionState.active:
-              return BioMetricLoginPage();
+              return const BioMetricLoginPage();
             case ConnectionState.done:
               return const MyHomePage();
           }
