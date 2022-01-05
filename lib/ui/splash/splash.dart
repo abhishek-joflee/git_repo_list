@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../../utils/my_flutter_init.dart';
+
 class BioMetricLoginPage extends StatefulWidget {
   @override
   _BioMetricLoginPageState createState() => _BioMetricLoginPageState();
@@ -72,6 +74,10 @@ class _BioMetricLoginPageState extends State<BioMetricLoginPage> {
           localizedReason: 'Let OS determine authentication method',
           useErrorDialogs: true,
           stickyAuth: true);
+      if (authenticated) {
+        authMeCompleter.complete(authenticated);
+        return;
+      }
       setState(() {
         _isAuthenticating = false;
       });
@@ -104,6 +110,10 @@ class _BioMetricLoginPageState extends State<BioMetricLoginPage> {
           useErrorDialogs: true,
           stickyAuth: true,
           biometricOnly: true);
+      if (authenticated) {
+        authMeCompleter.complete(authenticated);
+        return;
+      }
       setState(() {
         _isAuthenticating = false;
         _authorized = 'Authenticating';

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-import 'data/models/repo.dart';
+import 'ui/home/home_page.dart';
 import 'ui/splash/splash.dart';
-import 'utils/my_hive_constants.dart';
+import 'utils/my_flutter_init.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter<Repo>(RepoAdapter());
-  await Hive.openBox<Repo>(repoBoxName);
-  await Hive.openBox(utilsBoxName);
+  await myFlutterInit();
   runApp(const MyApp());
 }
 
@@ -23,7 +19,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BioMetricLoginPage(),
+      home: FutureBuilder<bool>(
+        future: authMe(context),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+            case ConnectionState.active:
+              return BioMetricLoginPage();
+            case ConnectionState.done:
+              return const MyHomePage();
+          }
+        },
+      ),
     );
   }
 }
