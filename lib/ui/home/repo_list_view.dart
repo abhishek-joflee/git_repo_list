@@ -20,7 +20,7 @@ class _RepoListViewState extends State<RepoListView> {
 
   final Box<Repo> repoBox = Hive.box(repoBoxName);
 
-  void _handlePagination() async {
+  void _fetchRepos() async {
     setState(() {
       isFetching = true;
     });
@@ -28,6 +28,15 @@ class _RepoListViewState extends State<RepoListView> {
     setState(() {
       isFetching = false;
     });
+  }
+
+  // CALLING FETCH REPOS WHEN FIRST APP LAUNCH
+  @override
+  void initState() {
+    super.initState();
+    if (repoBox.length == 0) {
+      Future.delayed(Duration.zero, _fetchRepos);
+    }
   }
 
   @override
@@ -42,7 +51,7 @@ class _RepoListViewState extends State<RepoListView> {
             if (!isFetching &&
                 scrollInfo.metrics.pixels ==
                     scrollInfo.metrics.maxScrollExtent) {
-              _handlePagination();
+              _fetchRepos();
             }
             return true;
           },
