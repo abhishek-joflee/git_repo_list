@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:git_repo_list/data/models/repo.dart';
-import 'package:git_repo_list/utils/my_hive_constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../data/models/repo.dart';
+import '../../utils/my_hive_constants.dart';
 import 'repo_list_view.dart';
 
 class MyHomePage extends StatelessWidget {
