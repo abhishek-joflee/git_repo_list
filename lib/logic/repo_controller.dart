@@ -10,10 +10,11 @@ class RepoController {
   final Box utilsBox = Hive.box(utilsBoxName);
 
   bool _allLoaded = false;
+  bool isOffline = false;
 
   /// it fetches repos & add repo object to hive box
   Future<void> fetchRepos() async {
-    if (_allLoaded) return;
+    if (_allLoaded || isOffline) return;
 
     // GET LAST FETCHED PAGE COUNT & GET ALL REPOS
     int pageCount = utilsBox.get(lastFetchedPageName, defaultValue: 1);
