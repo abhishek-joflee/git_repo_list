@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../data/models/repo.dart';
 import '../../controller/repo_controller.dart';
+import '../../data/models/repo.dart';
 import '../../utils/my_hive_constants.dart';
 import 'repo_list_view.dart';
 
@@ -22,8 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-
-  final RepoController repoController = RepoController();
 
   @override
   void initState() {
@@ -58,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _connectionStatus = result;
     if (_connectionStatus == ConnectivityResult.none) {
       // USER IS OFFLINE
-      repoController.isOffline = true;
+      RepoController.instance.isOffline = true;
 
       // SHOW NO INTERNET SNACKBAR
       ScaffoldMessenger.of(context)
@@ -69,8 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
             duration: Duration(days: 1),
           ),
         );
-    } else {
-      repoController.isOffline = false;
+    } else if (_connectionStatus == ConnectivityResult.mobile ||
+        _connectionStatus == ConnectivityResult.wifi) {
+      RepoController.instance.isOffline = false;
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
   }

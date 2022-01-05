@@ -4,7 +4,7 @@ import '../models/repo.dart';
 class RepoRepository {
   final RepoAPI repoAPI = RepoAPI();
 
-  Future<List<Repo>> getRepos(int pageCount) async {
+  Future<List<Repo>?> getRepos(int pageCount) async {
     List<Repo> result = [];
     var rawRepos = await repoAPI.getRawRepos(pageCount);
 
@@ -13,9 +13,9 @@ class RepoRepository {
       for (var rawRepo in rawRepos) {
         result.add(Repo.fromJson(rawRepo));
       }
+      // RETURN THE LIST OF REPO
+      return result;
     }
-
-    // RETURN THE LIST OF REPO
-    return result;
+    return null;
   }
 }

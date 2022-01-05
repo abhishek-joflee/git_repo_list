@@ -13,6 +13,10 @@ class RepoController {
   bool _allLoaded = false;
   bool? isOffline;
 
+  static var _obj = RepoController();
+
+  static RepoController get instance => _obj;
+
   /// it fetches repos & add repo object to hive box
   Future<void> fetchRepos() async {
     if (isOffline == null) {
@@ -31,16 +35,18 @@ class RepoController {
 
     // GET LAST FETCHED PAGE COUNT & GET ALL REPOS
     int pageCount = utilsBox.get(lastFetchedPageName, defaultValue: 1);
-    List<Repo> repos = await repoRepository.getRepos(pageCount);
+    List<Repo>? repos = await repoRepository.getRepos(pageCount);
 
-    if (repos.length < 15) {
-      // ALL REPO LOADED
-      _allLoaded = true;
+    if (repos != null) {
+      if (repos.length < 15) {
+        // ALL REPO LOADED
+        _allLoaded = true;
+      }
+
+      // STORE LAST PAGE COUNT & REPOS
+      await utilsBox.put(lastFetchedPageName, pageCount + 1);
+      await repoBox.addAll(repos);
     }
-
-    // STORE LAST PAGE COUNT & REPOS
-    await utilsBox.put(lastFetchedPageName, pageCount + 1);
-    await repoBox.addAll(repos);
     return;
   }
 }

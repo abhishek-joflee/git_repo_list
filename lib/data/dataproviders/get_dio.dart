@@ -26,7 +26,7 @@ Dio getDio() {
       },
       onError: (DioError e, handler) {
         log("Error in API call", error: e.error.toString(), name: "API");
-        if (e.response!.statusCode == 403) {
+        if (e.response?.statusCode == 403) {
           Fluttertoast.showToast(msg: "Limit exceeded. Try later");
           handler.reject(e);
         }

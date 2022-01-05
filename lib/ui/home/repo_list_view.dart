@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../data/models/repo.dart';
 import '../../controller/repo_controller.dart';
+import '../../data/models/repo.dart';
 import '../../utils/my_hive_constants.dart';
 import '../widgets/icon_text_chip.dart';
 
@@ -10,7 +10,6 @@ import '../widgets/icon_text_chip.dart';
 class RepoListView extends StatelessWidget {
   RepoListView({Key? key}) : super(key: key);
 
-  final RepoController repoController = RepoController();
   final Box<Repo> repoBox = Hive.box(repoBoxName);
   // FUTURE HOLDING VARIABLE (to show loader)
   Future<void>? _fetchRepos;
@@ -19,7 +18,7 @@ class RepoListView extends StatelessWidget {
   Widget build(BuildContext context) {
     // CALLING FETCH REPOS ON FIRST APP LAUNCH
     if (repoBox.length == 0) {
-      _fetchRepos = repoController.fetchRepos();
+      _fetchRepos = RepoController.instance.fetchRepos();
     }
 
     // HIVE WILL REBUILD THIS, IF DATA ADDED
@@ -29,9 +28,10 @@ class RepoListView extends StatelessWidget {
         return ListView.separated(
           itemCount: repoBox.length + 1,
           itemBuilder: (context, index) {
+            print("$index build");
             // CALLING FETCH REPOS WHEN LAST 3RD ITEM IS RENDERED
             if (index == repoBox.length - 3) {
-              _fetchRepos = repoController.fetchRepos();
+              _fetchRepos = RepoController.instance.fetchRepos();
             }
 
             if (index != repoBox.length) {
