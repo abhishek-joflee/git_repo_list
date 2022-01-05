@@ -9,25 +9,23 @@ class RepoController {
   final Box<Repo> repoBox = Hive.box(repoBoxName);
   final Box utilsBox = Hive.box(utilsBoxName);
 
-  bool _canMakeAPICall = true;
+  bool _allLoaded = false;
 
   /// it fetches repos & add repo object to hive box
   Future<void> fetchRepos() async {
-    if (!_canMakeAPICall) {
-      return;
-    }
+    if (_allLoaded) return;
+
     // GET LAST FETCHED PAGE COUNT & GET ALL REPOS
     int pageCount = utilsBox.get(lastFetchedPageName, defaultValue: 1);
     List<Repo> repos = await repoRepository.getRepos(pageCount);
 
     if (repos.length < 15) {
-      _canMakeAPICall = false;
+      // ALL REPO LOADED
+      _allLoaded = true;
     }
 
-    // STORE LAST FETCHED PAGE COUNT
+    // STORE LAST PAGE COUNT & REPOS
     await utilsBox.put(lastFetchedPageName, pageCount + 1);
-
-    // ADD ALL REPOS TO REPO BOX
     await repoBox.addAll(repos);
     return;
   }

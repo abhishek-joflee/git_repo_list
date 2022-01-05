@@ -33,7 +33,7 @@ class MyHomePage extends StatelessWidget {
       ),
 
       // body
-      body: const RepoListView(),
+      body: RepoListView(),
     );
   }
 }
