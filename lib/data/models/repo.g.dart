@@ -67,12 +67,3 @@ Repo _$RepoFromJson(Map<String, dynamic> json) => Repo(
       openIssuesCount: json['open_issues_count'] as int,
       starCount: json['stargazers_count'] as int,
     );
-
-Map<String, dynamic> _$RepoToJson(Repo instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'description': instance.description,
-      'language': instance.language,
-      'open_issues_count': instance.openIssuesCount,
-      'stargazers_count': instance.starCount,
-    };

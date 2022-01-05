@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,8 +17,6 @@ class BioMetricLoginPage extends StatefulWidget {
 class _BioMetricLoginPageState extends State<BioMetricLoginPage> {
   final LocalAuthentication auth = LocalAuthentication();
   _SupportState _supportState = _SupportState.unknown;
-  bool? _canCheckBiometrics;
-  List<BiometricType>? _availableBiometrics;
   String _authorized = 'Not Authorized';
   bool _isAuthenticating = false;
 
@@ -29,40 +28,6 @@ class _BioMetricLoginPageState extends State<BioMetricLoginPage> {
               ? _SupportState.supported
               : _SupportState.unsupported),
         );
-  }
-
-  Future<void> _checkBiometrics() async {
-    late bool canCheckBiometrics;
-    try {
-      canCheckBiometrics = await auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      canCheckBiometrics = false;
-      print(e);
-    }
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _canCheckBiometrics = canCheckBiometrics;
-    });
-  }
-
-  Future<void> _getAvailableBiometrics() async {
-    late List<BiometricType> availableBiometrics;
-    try {
-      availableBiometrics = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      availableBiometrics = <BiometricType>[];
-      print(e);
-    }
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _availableBiometrics = availableBiometrics;
-    });
   }
 
   Future<void> _authenticate() async {
@@ -84,7 +49,7 @@ class _BioMetricLoginPageState extends State<BioMetricLoginPage> {
         _isAuthenticating = false;
       });
     } on PlatformException catch (e) {
-      print(e);
+      log("PlatformException", error: e);
       setState(() {
         _isAuthenticating = false;
         _authorized = 'Error - ${e.message}';
@@ -121,7 +86,7 @@ class _BioMetricLoginPageState extends State<BioMetricLoginPage> {
         _authorized = 'Authenticating';
       });
     } on PlatformException catch (e) {
-      print(e);
+      log("PlatformException", error: e);
       setState(() {
         _isAuthenticating = false;
         _authorized = 'Error - ${e.message}';

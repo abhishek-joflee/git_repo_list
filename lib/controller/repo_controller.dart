@@ -13,7 +13,7 @@ class RepoController {
   bool _allLoaded = false;
   bool? isOffline;
 
-  static var _obj = RepoController();
+  static final _obj = RepoController();
 
   static RepoController get instance => _obj;
 

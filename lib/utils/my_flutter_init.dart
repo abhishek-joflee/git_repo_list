@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../data/models/repo.dart';
-import '../controller/repo_controller.dart';
 import 'my_hive_constants.dart';
 
 /// initial thing to do before app starts
