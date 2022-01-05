@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ListTileSubtitleIconAndText extends StatelessWidget {
-  const ListTileSubtitleIconAndText(
-      {Key? key, required this.text, required this.iconData})
-      : super(key: key);
+class IconTextChip extends StatelessWidget {
+  const IconTextChip({
+    Key? key,
+    required this.text,
+    required this.iconData,
+  }) : super(key: key);
+
   final String text;
   final IconData iconData;
 
@@ -15,16 +18,12 @@ class ListTileSubtitleIconAndText extends StatelessWidget {
           iconData,
           size: 16,
         ),
-        const SizedBox(
-          width: 4,
-        ),
+        const SizedBox(width: 4),
         Text(
           text,
           style: TextStyle(color: Colors.black.withOpacity(.5)),
         ),
-        const SizedBox(
-          width: 10,
-        )
+        const SizedBox(width: 10)
       ],
     );
   }

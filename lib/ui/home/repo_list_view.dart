@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../data/models/repo.dart';
-import '../logic/repo_controller.dart';
-import '../utils/my_hive_constants.dart';
-import 'list_tile_subtitle_icon_and_text.dart';
+import '../../data/models/repo.dart';
+import '../../logic/repo_controller.dart';
+import '../../utils/my_hive_constants.dart';
+import '../widgets/icon_text_chip.dart';
 
 class RepoListView extends StatefulWidget {
   const RepoListView({Key? key}) : super(key: key);
@@ -93,20 +93,20 @@ class _RepoListViewState extends State<RepoListView> {
                               Row(
                                 children: [
                                   // LANGUAGE
-                                  ListTileSubtitleIconAndText(
+                                  IconTextChip(
                                     iconData: Icons.code,
                                     text: repo?.language ?? '',
                                   ),
 
                                   // ISSUE COUNT
-                                  ListTileSubtitleIconAndText(
+                                  IconTextChip(
                                     iconData: Icons.bug_report,
                                     text:
                                         repo?.openIssuesCount.toString() ?? '',
                                   ),
 
                                   // START COUNT
-                                  ListTileSubtitleIconAndText(
+                                  IconTextChip(
                                     iconData: Icons.face,
                                     text: repo?.starCount.toString() ?? '',
                                   ),
