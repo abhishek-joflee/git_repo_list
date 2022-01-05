@@ -40,6 +40,7 @@ dependencies:
   dio: ^4.0.4
   connectivity_plus: ^2.2.0
   local_auth: ^1.1.9
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:

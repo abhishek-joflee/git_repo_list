@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../utils/my_hive_constants.dart';
 
@@ -25,7 +26,14 @@ Dio getDio() {
       },
       onError: (DioError e, handler) {
         log("Error in API call", error: e.error.toString(), name: "API");
-        return handler.reject(e);
+        if (e.response!.statusCode == 403) {
+          Fluttertoast.showToast(msg: "Limit exceeded. Try later");
+          handler.reject(e);
+        }
+        if (e.response!.statusCode! >= 400) {
+          Fluttertoast.showToast(msg: "Something went wrong");
+          handler.reject(e);
+        }
       },
     ),
   );
