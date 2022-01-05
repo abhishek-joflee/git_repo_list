@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'data/models/repo.dart';
-import 'ui/home/home_page.dart';
+import 'ui/splash/splash.dart';
 import 'utils/my_hive_constants.dart';
 
 void main() async {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: BioMetricLoginPage(),
     );
   }
 }
