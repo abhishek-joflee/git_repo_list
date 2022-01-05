@@ -19,10 +19,7 @@ class RepoListView extends StatelessWidget {
   Widget build(BuildContext context) {
     // CALLING FETCH REPOS ON FIRST APP LAUNCH
     if (repoBox.length == 0) {
-      Future.delayed(
-        Duration.zero,
-        () => _fetchRepos = repoController.fetchRepos(),
-      );
+      _fetchRepos = repoController.fetchRepos();
     }
 
     // HIVE WILL REBUILD THIS, IF DATA ADDED
