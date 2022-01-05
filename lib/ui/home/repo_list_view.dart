@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../data/models/repo.dart';
-import '../../logic/repo_controller.dart';
+import '../../controller/repo_controller.dart';
 import '../../utils/my_hive_constants.dart';
 import '../widgets/icon_text_chip.dart';
 
@@ -109,29 +109,21 @@ class RepoListView extends StatelessWidget {
             } else {
               // SHOW LOADER IF FETCHING IN PROGRESS
               return FutureBuilder(
-                future: _fetchRepos,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  switch (snapshot.connectionState) {
-
+                  future: _fetchRepos,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
                     // LOADER IF FETCH IN PROGRESS
-                    case ConnectionState.none:
-                    case ConnectionState.active:
-                    case ConnectionState.waiting:
-                      return Center(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 9.0),
-                          child: CircularProgressIndicator(
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                        ),
-                      );
-
-                    // EMPTY CONTAINER IF DONE
-                    case ConnectionState.done:
-                      return Container();
-                  }
-                },
-              );
+                    return (snapshot.connectionState == ConnectionState.waiting)
+                        ? Center(
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 9.0),
+                              child: CircularProgressIndicator(
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                            ),
+                          )
+                        // EMPTY CONTAINER IF DONE
+                        : Container();
+                  });
             }
           },
 

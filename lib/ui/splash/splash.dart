@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:git_repo_list/controller/auth_controller.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../../utils/my_flutter_init.dart';
@@ -75,7 +76,7 @@ class _BioMetricLoginPageState extends State<BioMetricLoginPage> {
           useErrorDialogs: true,
           stickyAuth: true);
       if (authenticated) {
-        authMeCompleter.complete(authenticated);
+        AuthController.authMeCompleter.complete(authenticated);
         return;
       }
       setState(() {
@@ -111,7 +112,7 @@ class _BioMetricLoginPageState extends State<BioMetricLoginPage> {
           stickyAuth: true,
           biometricOnly: true);
       if (authenticated) {
-        authMeCompleter.complete(authenticated);
+        AuthController.authMeCompleter.complete(authenticated);
         return;
       }
       setState(() {

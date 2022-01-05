@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../data/models/repo.dart';
-import '../../logic/repo_controller.dart';
+import '../../controller/repo_controller.dart';
 import '../../utils/my_hive_constants.dart';
 import 'repo_list_view.dart';
 
@@ -29,7 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     initConnectivity();
-
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
@@ -71,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
     } else {
+      repoController.isOffline = false;
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
     }
   }

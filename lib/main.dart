@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:git_repo_list/controller/auth_controller.dart';
 
 import 'ui/home/home_page.dart';
 import 'ui/splash/splash.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: FutureBuilder<bool>(
-        future: authMe(context),
+        future: AuthController.authMe(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:

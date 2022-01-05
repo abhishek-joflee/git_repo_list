@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../data/models/repo.dart';
@@ -10,11 +11,23 @@ class RepoController {
   final Box utilsBox = Hive.box(utilsBoxName);
 
   bool _allLoaded = false;
-  bool isOffline = false;
+  bool? isOffline;
 
   /// it fetches repos & add repo object to hive box
   Future<void> fetchRepos() async {
-    if (_allLoaded || isOffline) return;
+    if (isOffline == null) {
+      // set offline bool
+      ConnectivityResult result = await Connectivity().checkConnectivity();
+      if (result == ConnectivityResult.none) {
+        isOffline = true;
+      } else {
+        isOffline = false;
+      }
+    }
+
+    if (isOffline! || _allLoaded) {
+      return;
+    }
 
     // GET LAST FETCHED PAGE COUNT & GET ALL REPOS
     int pageCount = utilsBox.get(lastFetchedPageName, defaultValue: 1);

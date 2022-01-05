@@ -25,7 +25,7 @@ Dio getDio() {
       },
       onError: (DioError e, handler) {
         log("Error in API call", error: e.error.toString(), name: "API");
-        return handler.next(e);
+        return handler.reject(e);
       },
     ),
   );
